@@ -1,45 +1,31 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const fs = require('fs');
-const path = require('path');
+const express = require("express");
+const fetch = require("node-fetch");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Разрешаем запросы с любого домена
+app.use(cors());
 app.use(bodyParser.json());
 
-// Путь к файлу для хранения корзин
-const DATA_FILE = path.join(__dirname, 'carts.json');
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBSQmGT5cFvUqhVy3NFTP1esqkNouEm0qe_bsnBn7ppvDHOaUQBimHloGljz7dEdB1/exec";
 
-// Проверяем, есть ли файл, если нет — создаём пустой массив
-if (!fs.existsSync(DATA_FILE)) {
-  fs.writeFileSync(DATA_FILE, JSON.stringify([]));
-}
+app.post("/submit", async (req, res) => {
+  try {
+    const response = await fetch(GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(req.body)
+    });
 
-// Роут для приёма корзины
-app.post('/submit', (req, res) => {
-  const { order, frontendBalance, backendBalance } = req.body;
-
-  if (!order || order.length === 0) {
-    return res.status(400).send({ error: 'Cart is empty' });
+    const result = await response.json();
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ status: "error", message: err.message });
   }
-
-  // Читаем существующие данные
-  let carts = JSON.parse(fs.readFileSync(DATA_FILE));
-
-  // Добавляем новую корзину
-  const newEntry = {
-    timestamp: new Date().toISOString(),
-    order,
-    frontendBalance,
-    backendBalance
-  };
-  carts.push(newEntry);
-
-  // Сохраняем обратно
-  fs.writeFileSync(DATA_FILE, JSON.stringify(carts, null, 2));
-
-  res.send({ status: 'success', message: 'Cart saved to file' });
 });
 
-// Запуск сервера
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

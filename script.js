@@ -126,17 +126,17 @@ function closeCart(){ document.getElementById("cartModal").classList.remove("act
 
 async function checkout() {
   try {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbyBSQmGT5cFvUqhVy3NFTP1esqkNouEm0qe_bsnBn7ppvDHOaUQBimHloGljz7dEdB1/exec', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const response = await fetch("https://179f40a33482.ngrok-free.app/submit", { // или ngrok URL
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         order: cart,
-        user: tg.initDataUnsafe?.user?.first_name || 'Anonymous'
+        user: tg.initDataUnsafe?.user?.first_name || "Anonymous"
       })
     });
 
     const result = await response.json();
-    if (result.status === 'success') {
+    if (result.status === "success") {
       cart = [];
       frontendBalance = 50;
       backendBalance = 40;
@@ -145,7 +145,7 @@ async function checkout() {
       closeCart();
       tg.showPopup({ title: "Success", message: "Plan saved to Google Sheets" });
     } else {
-      throw new Error(result.message || 'Unknown error');
+      throw new Error(result.message || "Unknown error");
     }
   } catch (err) {
     console.error(err);
