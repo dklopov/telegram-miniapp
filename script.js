@@ -126,25 +126,33 @@ function closeCart(){ document.getElementById("cartModal").classList.remove("act
 
 async function checkout() {
   try {
-    await fetch('https://script.google.com/macros/s/AKfycbyBSQmGT5cFvUqhVy3NFTP1esqkNouEm0qe_bsnBn7ppvDHOaUQBimHloGljz7dEdB1/exec', {  // ваш URL
+    const response = await fetch('https://script.google.com/macros/s/AKfycbyBSQmGT5cFvUqhVy3NFTP1esqkNouEm0qe_bsnBn7ppvDHOaUQBimHloGljz7dEdB1/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ order: cart, user: "User1" })
+      body: JSON.stringify({
+        order: cart,
+        user: tg.initDataUnsafe?.user?.first_name || 'Anonymous'
+      })
     });
 
-    cart = [];
-    frontendBalance = 50;
-    backendBalance = 40;
-    updateBalanceDisplay();
-    renderProducts();
-    closeCart();
-    tg.showPopup({ title: "Success", message: "Plan saved to Google Sheets" });
-
+    const result = await response.json();
+    if (result.status === 'success') {
+      cart = [];
+      frontendBalance = 50;
+      backendBalance = 40;
+      updateBalanceDisplay();
+      renderProducts();
+      closeCart();
+      tg.showPopup({ title: "Success", message: "Plan saved to Google Sheets" });
+    } else {
+      throw new Error(result.message || 'Unknown error');
+    }
   } catch (err) {
     console.error(err);
     tg.showPopup({ title: "Error", message: "Failed to save plan" });
   }
 }
+
 
 
 document.addEventListener("DOMContentLoaded", initApp);
