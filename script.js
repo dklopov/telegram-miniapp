@@ -126,7 +126,7 @@ function closeCart(){ document.getElementById("cartModal").classList.remove("act
 
 async function checkout() {
   try {
-    const response = await fetch("https://179f40a33482.ngrok-free.app/submit", { // или ngrok URL
+    const response = await fetch("https://webhook.site/8455c2d1-03c4-4cb8-9b8f-8e6d9b483f31", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -135,23 +135,27 @@ async function checkout() {
       })
     });
 
-    const result = await response.json();
-    if (result.status === "success") {
+    if (response.ok) {
+      // очистка корзины и восстановление балансов
       cart = [];
       frontendBalance = 50;
       backendBalance = 40;
       updateBalanceDisplay();
       renderProducts();
       closeCart();
-      tg.showPopup({ title: "Success", message: "Plan saved to Google Sheets" });
+
+      tg.showPopup?.({ title: "Success", message: "Plan sent successfully!" }) 
+        || alert("Plan sent successfully!");
     } else {
-      throw new Error(result.message || "Unknown error");
+      throw new Error("Request failed with status " + response.status);
     }
   } catch (err) {
     console.error(err);
-    tg.showPopup({ title: "Error", message: "Failed to save plan" });
+    tg.showPopup?.({ title: "Error", message: "Failed to send plan" }) 
+      || alert("Failed to send plan");
   }
 }
+
 
 
 
