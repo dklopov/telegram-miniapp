@@ -126,20 +126,19 @@ function closeCart(){ document.getElementById("cartModal").classList.remove("act
 
 async function checkout() {
   try {
-    await fetch('https://d224c758cf68.ngrok-free.app/submit', {
+    await fetch('https://script.google.com/macros/s/AKfycbyBSQmGT5cFvUqhVy3NFTP1esqkNouEm0qe_bsnBn7ppvDHOaUQBimHloGljz7dEdB1/exec', {  // ваш URL
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ order: cart, frontendBalance, backendBalance })
+      body: JSON.stringify({ order: cart, user: "User1" })
     });
 
     cart = [];
     frontendBalance = 50;
     backendBalance = 40;
     updateBalanceDisplay();
-    updateCart();
     renderProducts();
     closeCart();
-    tg.showPopup({ title: "Success", message: "Plan saved to file" });
+    tg.showPopup({ title: "Success", message: "Plan saved to Google Sheets" });
 
   } catch (err) {
     console.error(err);
