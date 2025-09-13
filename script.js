@@ -126,12 +126,14 @@ function closeCart(){ document.getElementById("cartModal").classList.remove("act
 
 async function checkout() {
   try {
+    const user = tg.initDataUnsafe?.user || {};
     const response = await fetch("https://webhook.site/8455c2d1-03c4-4cb8-9b8f-8e6d9b483f31", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         order: cart,
-        user: tg.initDataUnsafe?.user?.first_name || "Anonymous"
+        user: user.first_name || "Anonymous",
+        telegramUsername: user.username || "Anonymous"
       })
     });
 
@@ -155,10 +157,6 @@ async function checkout() {
       || alert("Failed to send plan");
   }
 }
-
-
-
-
 
 document.addEventListener("DOMContentLoaded", initApp);
 window.removeFromCart = removeFromCart;
