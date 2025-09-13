@@ -126,7 +126,7 @@ function closeCart(){ document.getElementById("cartModal").classList.remove("act
 
 async function checkout() {
   try {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbyBSQmGT5cFvUqhVy3NFTP1esqkNouEm0qe_bsnBn7ppvDHOaUQBimHloGljz7dEdB1/exec', {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbxtUjrVjGgg53V0cSwOqi6uvNofhtnbvcV6TRvVw6WqDm4n4x2ePt41Y1mn9BCYXGp5/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
