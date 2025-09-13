@@ -124,12 +124,29 @@ function updateCart(){
 function openCart(){ document.getElementById("cartModal").classList.add("active"); }
 function closeCart(){ document.getElementById("cartModal").classList.remove("active"); }
 
-function checkout(){
-  tg.sendData(JSON.stringify({order:cart, frontendBalance, backendBalance}));
-  cart=[]; frontendBalance=50; backendBalance=40;
-  updateBalanceDisplay(); updateCart(); renderProducts(); closeCart();
-  tg.showPopup({title:"Success", message:"Plan submitted"});
+async function checkout() {
+  try {
+    await fetch('http://localhost:3000/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ order: cart, frontendBalance, backendBalance })
+    });
+
+    cart = [];
+    frontendBalance = 50;
+    backendBalance = 40;
+    updateBalanceDisplay();
+    updateCart();
+    renderProducts();
+    closeCart();
+    tg.showPopup({ title: "Success", message: "Plan saved to file" });
+
+  } catch (err) {
+    console.error(err);
+    tg.showPopup({ title: "Error", message: "Failed to save plan" });
+  }
 }
+
 
 document.addEventListener("DOMContentLoaded", initApp);
 window.removeFromCart = removeFromCart;
