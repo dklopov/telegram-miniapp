@@ -126,7 +126,7 @@ function closeCart(){ document.getElementById("cartModal").classList.remove("act
 
 async function checkout() {
   try {
-    await fetch('http://localhost:3000/submit', {
+    await fetch('https://d224c758cf68.ngrok-free.app/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ order: cart, frontendBalance, backendBalance })
