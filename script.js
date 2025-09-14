@@ -7,17 +7,30 @@ let currentCategory = "all";
 
 const categories = [
   {id:"all", name:"All"},
-  {id:"frontend", name:"Frontend"},
-  {id:"backend", name:"Backend"},
-  {id:"common", name:"Common"}
+  {id:"integration", name:"Integration"},
+  {id:"vendorApp", name:"Vendor App"},
+  {id:"admin", name:"RTE Admin"},
+  {id:"vit", name:"Вкусно - и точка"}
 ];
 
 const products = [
-  {id:1,name:"Authorization", description:"Login and registration module", frontend:3, backend:2, category:"common"},
-  {id:2,name:"Homepage", description:"Frontend and logic of main page", frontend:5, backend:2, category:"frontend"},
-  {id:3,name:"User API", description:"CRUD for users", frontend:1, backend:4, category:"backend"},
-  {id:4,name:"Feedback Form", description:"User interaction form", frontend:2, backend:1, category:"frontend"},
-  {id:5,name:"Reports", description:"Report generation module", frontend:2, backend:3, category:"backend"}
+  {id:1,name:"Управление остатками через dc-adapter", description:"Реализация принесет вертикали дополнительно ~3700 заказов за счет подключения партнеров \"Милти\",\"Азбука Вкуса\",\"Дикси\".", frontend:3, backend:2, category:"integration"},
+  {id:2,name:"Конфигуратор периодичности формирования финансовых отчетов", description:"Для запуска \"Вкусно - и точка\" необходимо научиться конфигурировать период генерации финансовых отчетов и отправлять несколько отчетов в рамках недели и месяца. Запуск партнера принесет вертикали дополнительно ~16000 заказов.", frontend:5, backend:2, category:"vit"},
+  {id:3,name:"Раздел \"Поддержка\" в Vendor App", description:"Для запуска \"Вкусно - и точка\" необходимо реализовать раздел, в рамках которого сотрудники ресторана смогут создать обращение в поддержку \"Магнит Рестораны\". Запуск партнера принесет вертикали дополнительно ~16000 заказов.", frontend:1, backend:4, category:"vit"},
+  {id:4,name:"Ролевая модель с ограничением доступа к вендорам в Vendor App", description:"Для запуска \"Вкусно - и точка\" необходимо реализовать механизм ограничения доступа к конкретным вендорам. Запуск партнера принесет вертикали дополнительно ~16000 заказов.", frontend:2, backend:1, category:"vit"},
+  {id:5,name:"Ролевая модель с ограничением доступа к разделам в Vendor App", description:"Для запуска \"Вкусно - и точка\" необходимо реализовать механизм разграничения прав доступа сотрудников ресторанов к разделам и функциям в Vendor App. Запуск партнера принесет вертикали дополнительно ~16000 заказов.", frontend:2, backend:3, category:"vit"},
+  {id:6,name:"Мобильное приложение Vendor App для Android и iOS", description:"Разработать и опубликовать в сторы версию для мобильных телефонов и планшетов для Android и iOS. Запуск принесет вертикали дополнительно ~16000 заказов. ", frontend:2, backend:3, category:"vit"},
+  {id:7,name:"Раздел \"Отчеты\" в Vendor App", description:"Реализовать в Vendor App раздел \"Отчеты\", интегрированный с сервисом rte-reports, с возможностью скачивания отчетов в формате .excel и подачи апелляций по спорным отчетам.", frontend:2, backend:3, category:"vendorApp"},
+  {id:8,name:"Отображение коммерческих условий ресторана в Vendor App", description:"Реализовать в Vendor App информационный блок, отображающий актуальные коммерческие условия ресторана", frontend:2, backend:3, category:"vendorApp"},
+  {id:9,name:"Отключение вендора с указанием причины отключения и автора", description:"Сбор причин отключений позволит RestOps быстрее выявлять системные проблемы (технические сбои, проблемы с каталогом) и сократит среднее время восстановления работы ресторанов.", frontend:2, backend:3, category:"admin"},
+  {id:10,name:"Интеграция с Rostics", description:"Провести комплексное тестирование существующего функционала интеграции и доработать dc-adapter для обеспечения полного цикла работы с партнером. Запуск партнера принесет вертикали дополнительно ~7000 заказов.", frontend:2, backend:3, category:"integration"},
+  {id:11,name:"Самовывоз в Vendor App", description:"Реализовать функцонал самовывоза в приложении Vendor App. Запуск функционала принесет вертикали дополнительно ~1000 заказов.", frontend:2, backend:3, category:"vendorApp"},
+  {id:12,name:"Самовывоз в dc-adapter", description:"Реализовать функцонал самовывоза в dc-adapter. Запуск функционала принесет вертикали дополнительно ~1000 заказов.", frontend:2, backend:3, category:"integration"},
+  {id:13,name:"Автоматическая генерация зон доставки при создании вендора", description:"Для сокращения времени, требуемого для запуска вендора и автоматизации ручных процессов необходимо автоматизировать процесс генерации зон доставки вендорам сразу после их создания.", frontend:2, backend:3, category:"admin"},
+  {id:14,name:"Слотовая доставка", description:"Для запуска \"Grow Food\" необходимо реализовать механизм создания заказа в слот. Запуск партнера принесет вертикали дополнительно ~1000 заказов.", frontend:2, backend:3, category:"integration"},
+  {id:16,name:"API для внешних витрин", description:"Для запуска внешних витрин в \"ТБанк\", \"ВТБ\" необходимо реализовать сервис и публичный API, позволяющие внешним витринам создавать заказы в OMS RTE и получать актуальную информацию о ресторанах (активность, адрес, график работы, меню и тд).", frontend:2, backend:3, category:"integration"},
+  {id:17,name:"Ручное редактирование полигона доставки вендора в RTE Admin", description:"Для внесеня корректировок в уже существующие полигоны доставки необходимо иметь интерфейс редактирования в RTE Admin", frontend:2, backend:3, category:"admin"},
+  {id:18,name:"Использование функционала Vendor App ресторанами на интеграции", description:"Для запуска \"Вкусно - и точка\" необходимо реализовать механизм использования функционала Vendor App. Запуск партнера принесет вертикали дополнительно ~16000 заказов.", frontend:2, backend:3, category:"vit"}
 ];
 
 function initApp() { renderCategories(); renderProducts(); updateBalanceDisplay(); setupEventListeners(); }
