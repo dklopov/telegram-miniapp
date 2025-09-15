@@ -26,7 +26,7 @@ body {
   position: relative;
   background: url("assets/wall.png") no-repeat center center;
   background-size: cover;
-  padding: 100px 20px 40px 20px; /* Уменьшил нижний padding с 60px до 40px */
+  padding: 100px 20px 40px 20px;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   color: var(--color-text);
@@ -35,7 +35,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 30px; /* Добавил отступ снизу */
+  margin-bottom: 30px;
 }
 .header-text h1 {
   font-size: 22px;
@@ -211,7 +211,6 @@ body {
   flex-wrap: wrap;
   gap: 6px;
 }
-/* Исправленный стиль для индикатора "В корзине" - теперь только на карточках товаров */
 .product-in-cart {
   position: absolute;
   top: 8px;
@@ -317,16 +316,23 @@ body {
 @media (min-width: 600px) { .products { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 900px) { .products { grid-template-columns: repeat(4, 1fr); } }
 @media (max-width: 480px) {
-  .header { padding: 80px 16px 30px; } /* Уменьшил паддинги для мобильных */
-  .header-text h1 { font-size: 20px; }
-  .header-text p { font-size: 14px; }
+  .header { 
+    padding: 60px 16px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .header-top { 
+    display: none; /* Скрываем верхнюю часть с текстом и чипсом Q4 */
+  }
+  .header-text { display: none; } /* Скрываем текстовую часть */
   .header-balance { 
-    bottom: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    flex-wrap: wrap;
+    position: static;
+    transform: none;
+    margin-top: auto;
     justify-content: center;
     gap: 8px;
+    flex-wrap: wrap;
   }
   .categories { padding: 16px; }
   .products { padding: 0 16px; gap: 12px; }
