@@ -82,7 +82,7 @@ body {
   color: var(--color-text);
 }
 .chip-frontend {
-  background-color: #FF5722;
+  background-color: var(--color-primary);
   color: white;
 }
 .chip-backend {
@@ -315,7 +315,7 @@ body {
 
 @media (min-width: 600px) { .products { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 900px) { .products { grid-template-columns: repeat(4, 1fr); } }
-@media (max-width: 480px) {
+@media (max-width: 590px) {
   .header { 
     padding: 60px 16px 30px;
     display: flex;
@@ -323,9 +323,9 @@ body {
     justify-content: flex-end;
   }
   .header-top { 
-    display: none; /* Скрываем верхнюю часть с текстом и чипсом Q4 */
+    display: none;
   }
-  .header-text { display: none; } /* Скрываем текстовую часть */
+  .header-text { display: none; }
   .header-balance { 
     position: static;
     transform: none;
@@ -336,11 +336,26 @@ body {
   }
   .categories { padding: 16px; }
   .products { padding: 0 16px; gap: 12px; }
-  .product-card { padding: 12px; }
-  .product-name { font-size: 14px; }
-  .product-description { font-size: 11px; -webkit-line-clamp: 2; }
-  .product-effect { font-size: 14px; }
   .cart-button { left: 16px; right: 16px; bottom: 16px; }
   .cart-item { flex-direction: column; gap: 8px; }
   .cart-item-name { margin-right: 0; }
+}
+
+/* Уменьшение чипсов в карточках товаров на узких экранах */
+@media (max-width: 456px) {
+  .product-price {
+    gap: 4px;
+  }
+  .product-price .chip {
+    padding: 4px 6px;
+    font-size: 10px;
+    border-radius: 12px;
+  }
+  .product-description {
+    -webkit-line-clamp: 4; /* Показываем больше строк описания */
+    margin-bottom: 6px;
+  }
+  .product-info {
+    padding: 8px;
+  }
 }
