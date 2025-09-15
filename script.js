@@ -7,11 +7,11 @@ let currentCategory = "all";
 
 const categories = [
   {id:"all", name:"All"},
-  {id:"integration", name:"Integration"},
-  {id:"vendorApp", name:"Vendor App"},
-  {id:"admin", name:"RTE Admin"},
   {id:"vit", name:"Вкусно - и точка"},
-  {id:"rostics", name:"Rostics"}
+  {id:"rostics", name:"Rostics"},
+  {id:"vendorApp", name:"Vendor App"},
+  {id:"integration", name:"Integration"},
+  {id:"admin", name:"RTE Admin"}
 ];
 
 const products = [
