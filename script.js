@@ -21,7 +21,7 @@ const products = [
   {id:4,name:"Ролевая модель с ограничением доступа к вендорам в Vendor App", description:"Для запуска \"Вкусно - и точка\" необходимо реализовать механизм ограничения доступа к конкретным вендорам.", frontend:0, backend:20, category:"vit", effect:"+16000 заказов"},
   {id:5,name:"Ролевая модель с ограничением доступа к разделам в Vendor App", description:"Для запуска \"Вкусно - и точка\" необходимо реализовать механизм разграничения прав доступа сотрудников ресторанов к разделам и функциям в Vendor App.", frontend:0, backend:20, category:"vit", effect:"+16000 заказов"},
   {id:6,name:"Мобильное приложение Vendor App для Android и iOS", description:"Разработать и опубликовать в сторы версию для мобильных телефонов и планшетов для Android и iOS.", frontend:25, backend:15, category:"vit", effect:"+16000 заказов"},
-  {id:7,name:"Раздел \"Отчеты\" в Vendor App", description:"Реализовать в Vendor App раздел \"Отчеты\", интегрированный с сервисом rte-reports, с возможностью скачивания отчетов в формате .excel и подачи апелляций по спорным отчетам.", frontend:5, backend:30, category:"vendorApp", effect:"+200 брендов"},
+  {id:7,name:"Раздел \"Отчеты\" в Vendor App", description:"Реализовать в Vendor App раздел \"Отчеты\", интегрированный с сервисом rte-reports, с возможностью скачивания отчетов в формате .excel и подачи апелляций по спорным отчетам.", frontend:5, backend:30, category:"vendorApp", effect:"+200 брендов в 2025"},
   {id:8,name:"Отображение коммерческих условий ресторана в Vendor App", description:"Реализовать в Vendor App информационный блок, отображающий актуальные коммерческие условия ресторана", frontend:5, backend:15, category:"vendorApp", effect:"+2000 брендов в 2026"},
   {id:9,name:"Отключение вендора с указанием причины отключения и автора", description:"Сбор причин отключений позволит RestOps быстрее выявлять системные проблемы (технические сбои, проблемы с каталогом) и сократит среднее время восстановления работы ресторанов.", frontend:5, backend:20, category:"admin", effect:"Улучшение операционных метрик"},
   {id:10,name:"Интеграция с Rostics", description:"Провести комплексное тестирование существующего функционала интеграции и доработать dc-adapter для обеспечения полного цикла работы с партнером.", frontend:0, backend:20, category:"rostics", effect:"+7000 заказов"},
@@ -102,7 +102,7 @@ function addToCart(id) {
   const product = products.find(p=>p.id===id);
   if(!product || cart.find(i=>i.product.id===id)) return;
   if(frontendBalance<product.frontend || backendBalance<product.backend){
-    tg.showPopup({title:"Error", message:"Not enough resources"});
+    tg.showPopup({title:"Ошибка", message:"Недостаточно ресурсов"});
     return;
   }
   frontendBalance -= product.frontend;
@@ -111,7 +111,7 @@ function addToCart(id) {
   updateBalanceDisplay();
   updateCart();
   renderProducts();
-  tg.showPopup({title:"Added", message:`${product.name} added to plan`});
+  tg.showPopup({title:"Добавлено", message:`${product.name} добавлена в план`});
 }
 
 function removeFromCart(id){
@@ -124,7 +124,7 @@ function removeFromCart(id){
     updateBalanceDisplay();
     updateCart();
     renderProducts();
-    tg.showPopup({title:"Removed", message:`${product.name} removed from plan`});
+    tg.showPopup({title:"Удалено", message:`${product.name} убрана из плана`});
   }
 }
 
@@ -143,7 +143,7 @@ function updateCart(){
 
   const totalFrontend = cart.reduce((s,i)=>s+i.product.frontend,0);
   const totalBackend = cart.reduce((s,i)=>s+i.product.backend,0);
-  cartTotal.textContent = `Total Used: Frontend ${totalFrontend}, Backend ${totalBackend}`;
+  cartTotal.textContent = `Использовано: Frontend ${totalFrontend}, Backend ${totalBackend}`;
   checkoutBtn.disabled = (cart.length===0);
 }
 
@@ -172,14 +172,14 @@ async function checkout() {
       renderProducts();
       closeCart();
 
-      tg.showPopup?.({ title: "Success", message: "Plan sent successfully!" }) 
+      tg.showPopup?.({ title: "Успех", message: "План успешно отправлен!" })
         || alert("Plan sent successfully!");
     } else {
       throw new Error("Request failed with status " + response.status);
     }
   } catch (err) {
     console.error(err);
-    tg.showPopup?.({ title: "Error", message: "Failed to send plan" }) 
+    tg.showPopup?.({ title: "Ошибка", message: "Не удалось отправить план" })
       || alert("Failed to send plan");
   }
 }
