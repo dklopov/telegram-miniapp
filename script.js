@@ -159,7 +159,7 @@ function closeCart(){ document.getElementById("cartModal").classList.remove("act
 async function checkout() {
   try {
     const user = tg.initDataUnsafe?.user || {};
-    const response = await fetch("https://webhook.site/8455c2d1-03c4-4cb8-9b8f-8e6d9b483f31", {
+    const response = await fetch("https://webhook.site/9de780bd-6442-4243-9b70-45b410963af8", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
